@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userRouter = require("./Routes/UserRoutes");
+const toolRouter = require("./Routes/ToolRoutes");
 require("dotenv").config();
 const app = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ mongoose.connect(
 );
 
 app.use(userRouter);
+app.use(toolRouter);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
