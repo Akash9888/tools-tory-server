@@ -1,7 +1,11 @@
 const express = require("express");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const userRouter = require("./Routes/UserRoutes");
 require("dotenv").config();
 const app = express();
+app.use(express.json());
+app.use(cors());
 const port = process.env.port || 5000;
 
 mongoose.connect(
@@ -9,10 +13,7 @@ mongoose.connect(
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
-
+app.use(userRouter);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
