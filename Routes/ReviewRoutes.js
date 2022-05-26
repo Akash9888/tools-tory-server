@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const reviewModel = require("../Models/Review");
 const ObjectId = require("mongodb").ObjectId;
-
-app.post("/api/create-review", async (req, res) => {
+const verifyJwt = require("../Middleware/VerifyJwt");
+app.post("/api/create-review", verifyJwt, async (req, res) => {
     const review = new reviewModel(req.body);
 
     try {

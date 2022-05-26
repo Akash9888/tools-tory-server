@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const verifyJwt = require("../Middleware/VerifyJwt");
 // This is a public sample test API key.
 // Don’t submit any personally identifiable information in requests made with this key.
 // Sign in to see your own test API key embedded in code samples.
@@ -16,7 +17,7 @@ const calculateOrderAmount = (items) => {
     return 1400;
 };
 
-app.post("/create-payment-intent", async (req, res) => {
+app.post("/create-payment-intent", verifyJwt, async (req, res) => {
     console.log(req.body);
     const items = req.body;
 
