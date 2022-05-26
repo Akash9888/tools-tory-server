@@ -5,7 +5,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 app.post("/api/create-review", async (req, res) => {
     const review = new reviewModel(req.body);
-    console.log(review);
+
     try {
         await review.save();
         res.send(review);
@@ -15,7 +15,7 @@ app.post("/api/create-review", async (req, res) => {
 });
 app.get("/api/fetch-reviews", async (req, res) => {
     const reviews = await reviewModel.find();
-    console.log(reviews);
+
     try {
         res.send(reviews);
     } catch (e) {
