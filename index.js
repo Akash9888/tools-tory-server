@@ -5,6 +5,7 @@ const userRouter = require("./Routes/UserRoutes");
 const toolRouter = require("./Routes/ToolRoutes");
 const orderRouter = require("./Routes/OrderRoutes");
 const paymentRouter = require("./Routes/PaymentRoutes");
+const reviewRouter = require("./Routes/ReviewRoutes");
 require("dotenv").config();
 const app = express();
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use(userRouter);
 app.use(toolRouter);
 app.use(orderRouter);
 app.use(paymentRouter);
+app.use(reviewRouter);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
