@@ -33,6 +33,19 @@ app.get("/api/fetch-user/:email", verifyJwt, async (req, res) => {
     const query = { email: req.params.email };
 
     const user = await userModel.find(query);
+    console.log(user);
+
+    try {
+        res.send(user);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+app.get("/api/fetch-admin/:email", verifyJwt, async (req, res) => {
+    const query = { email: req.params.email };
+
+    const user = await userModel.find(query).select(["role"]);
+    console.log(user);
 
     try {
         res.send(user);
@@ -43,22 +56,24 @@ app.get("/api/fetch-user/:email", verifyJwt, async (req, res) => {
 
 app.put("/api/make-admin/:email", verifyJwt, async (req, res) => {
     const query = { email: req.params.email };
-    console.log(query);
-    console.log(req.body);
-    const user = await userModel.find(query).select(["role"]);
 
-    if (user[0]?.role == "admin") {
-        return res.send("Allready Admin.");
-    } else {
-        userModel.findOneAndUpdate(
-            query,
-            req.body,
-            { upsert: true },
-            function (err, doc) {
-                if (err) return res.send(500, { error: err });
-                return res.send("Succesfully saved.");
-            }
-        );
+    const user = await userModel.find(query).select(["role"]);
+    try {
+        if (user[0]?.role == "admin") {
+            return res.send("Allready Admin.");
+        } else {
+            userModel.findOneAndUpdate(
+                query,
+                req.body,
+                { upsert: true },
+                function (err, doc) {
+                    if (err) return res.send(500, { error: err });
+                    return res.send("Succesfully saved.");
+                }
+            );
+        }
+    } catch (error) {
+        res.status(500).send(error);
     }
 });
 app.put("/api/update-user/:email", verifyJwt, async (req, res) => {
