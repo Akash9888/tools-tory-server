@@ -17,7 +17,7 @@ const calculateOrderAmount = (items) => {
     return 1400;
 };
 
-app.post("/create-payment-intent", verifyJwt, async (req, res) => {
+app.post("create-payment-intent", async (req, res) => {
     console.log(req.body);
     const items = req.body;
 
