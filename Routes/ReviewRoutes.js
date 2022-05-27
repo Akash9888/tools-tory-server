@@ -3,7 +3,7 @@ const app = express();
 const reviewModel = require("../Models/Review");
 const ObjectId = require("mongodb").ObjectId;
 const verifyJwt = require("../Middleware/VerifyJwt");
-app.post("/api/create-review", verifyJwt, async (req, res) => {
+app.post("/create-review", verifyJwt, async (req, res) => {
     const review = new reviewModel(req.body);
 
     try {
@@ -13,7 +13,7 @@ app.post("/api/create-review", verifyJwt, async (req, res) => {
         res.status(500).send(error);
     }
 });
-app.get("/api/fetch-reviews", async (req, res) => {
+app.get("/fetch-reviews", async (req, res) => {
     const reviews = await reviewModel.find();
 
     try {
@@ -22,7 +22,7 @@ app.get("/api/fetch-reviews", async (req, res) => {
         res.status(500).send(e);
     }
 });
-// app.get("/api/fetch-single-order/:_id", async (req, res) => {
+// app.get("/fetch-single-order/:_id", async (req, res) => {
 //     const query = { _id: ObjectId(req.params._id) };
 
 //     const order = await orderModel.find(query);
@@ -32,7 +32,7 @@ app.get("/api/fetch-reviews", async (req, res) => {
 //         res.status(500).send(e);
 //     }
 // });
-// app.put("/api/update-single-order/:_id", async (req, res) => {
+// app.put("/update-single-order/:_id", async (req, res) => {
 //     const query = { _id: ObjectId(req.params._id) };
 //     console.log(query);
 //     console.log(req.body);
@@ -47,7 +47,7 @@ app.get("/api/fetch-reviews", async (req, res) => {
 //     );
 // });
 
-// app.delete("/api/delete-order/:_id", async (req, res) => {
+// app.delete("/delete-order/:_id", async (req, res) => {
 //     const query = { _id: ObjectId(req.params._id) };
 //     try {
 //         const order = await orderModel.findByIdAndDelete(query);

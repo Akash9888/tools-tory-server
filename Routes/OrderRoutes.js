@@ -3,7 +3,7 @@ const app = express();
 const orderModel = require("../Models/Order");
 const ObjectId = require("mongodb").ObjectId;
 const verifyJwt = require("../Middleware/VerifyJwt");
-app.post("/api/create-order", verifyJwt, async (req, res) => {
+app.post("/create-order", verifyJwt, async (req, res) => {
     const order = new orderModel(req.body);
 
     try {
@@ -13,7 +13,7 @@ app.post("/api/create-order", verifyJwt, async (req, res) => {
         res.status(500).send(error);
     }
 });
-app.get("/api/fetch-orders/:email", verifyJwt, async (req, res) => {
+app.get("/fetch-orders/:email", verifyJwt, async (req, res) => {
     const query = { email: req.params.email };
 
     const order = await orderModel
@@ -33,7 +33,7 @@ app.get("/api/fetch-orders/:email", verifyJwt, async (req, res) => {
         res.status(500).send(e);
     }
 });
-app.get("/api/fetch-orders-manage", verifyJwt, async (req, res) => {
+app.get("/fetch-orders-manage", verifyJwt, async (req, res) => {
     const order = await orderModel
         .find()
         .select(["productId", "productName", "email", "status"]);
@@ -44,7 +44,7 @@ app.get("/api/fetch-orders-manage", verifyJwt, async (req, res) => {
         res.status(500).send(e);
     }
 });
-app.get("/api/fetch-single-order/:_id", verifyJwt, async (req, res) => {
+app.get("/fetch-single-order/:_id", verifyJwt, async (req, res) => {
     const query = { _id: ObjectId(req.params._id) };
 
     const order = await orderModel.find(query);
@@ -54,7 +54,7 @@ app.get("/api/fetch-single-order/:_id", verifyJwt, async (req, res) => {
         res.status(500).send(e);
     }
 });
-app.put("/api/update-single-order/:_id", verifyJwt, async (req, res) => {
+app.put("/update-single-order/:_id", verifyJwt, async (req, res) => {
     const query = { _id: ObjectId(req.params._id) };
     console.log(query);
     console.log(req.body);
@@ -69,7 +69,7 @@ app.put("/api/update-single-order/:_id", verifyJwt, async (req, res) => {
     );
 });
 
-app.delete("/api/delete-order/:_id", verifyJwt, async (req, res) => {
+app.delete("/delete-order/:_id", verifyJwt, async (req, res) => {
     const query = { _id: ObjectId(req.params._id) };
     try {
         const order = await orderModel.findByIdAndDelete(query);

@@ -5,7 +5,7 @@ const ObjectId = require("mongodb").ObjectId;
 const verifyJwt = require("../Middleware/VerifyJwt");
 // create tool api
 
-app.post("/api/create-tool", verifyJwt, async (req, res) => {
+app.post("/create-tool", verifyJwt, async (req, res) => {
     const tool = new toolModel(req.body);
     console.log(tool);
     try {
@@ -16,7 +16,7 @@ app.post("/api/create-tool", verifyJwt, async (req, res) => {
     }
 });
 
-app.get("/api/fetch-tools", async (req, res) => {
+app.get("/fetch-tools", async (req, res) => {
     const tools = await toolModel.find({});
 
     try {
@@ -25,7 +25,7 @@ app.get("/api/fetch-tools", async (req, res) => {
         res.status(500).send(error);
     }
 });
-app.get("/api/fetch-tools-delete", verifyJwt, async (req, res) => {
+app.get("/fetch-tools-delete", verifyJwt, async (req, res) => {
     const tools = await toolModel
         .find({})
         .select(["name", "quantity", "price", "min"]);
@@ -37,7 +37,7 @@ app.get("/api/fetch-tools-delete", verifyJwt, async (req, res) => {
     }
 });
 
-app.get("/api/fetch-single-tool/:_id", verifyJwt, async (req, res) => {
+app.get("/fetch-single-tool/:_id", verifyJwt, async (req, res) => {
     console.log(req.params._id);
     const query = { _id: ObjectId(req.params._id) };
 
@@ -50,7 +50,7 @@ app.get("/api/fetch-single-tool/:_id", verifyJwt, async (req, res) => {
     }
 });
 
-app.delete("/api/delete-product/:_id", verifyJwt, async (req, res) => {
+app.delete("/delete-product/:_id", verifyJwt, async (req, res) => {
     const query = { _id: ObjectId(req.params._id) };
     try {
         const product = await toolModel.findByIdAndDelete(query);

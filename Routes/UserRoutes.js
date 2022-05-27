@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const verifyJwt = require("../Middleware/VerifyJwt");
 app.use(express.json());
 // create user api
-app.post("/api/create-user", async (req, res) => {
+app.post("/create-user", async (req, res) => {
     const user = new userModel(req.body);
     console.log(user);
     console.log(req.body);
@@ -16,7 +16,7 @@ app.post("/api/create-user", async (req, res) => {
         res.status(500).send(error);
     }
 });
-app.post("/api/create-token", async (req, res) => {
+app.post("/create-token", async (req, res) => {
     console.log(req.body);
 
     const accessToken = jwt.sign(req.body, process.env.JWT_SECRET, {
@@ -29,7 +29,7 @@ app.post("/api/create-token", async (req, res) => {
     }
 });
 
-app.get("/api/fetch-user/:email", verifyJwt, async (req, res) => {
+app.get("/fetch-user/:email", verifyJwt, async (req, res) => {
     const query = { email: req.params.email };
 
     const user = await userModel.find(query);
@@ -41,7 +41,7 @@ app.get("/api/fetch-user/:email", verifyJwt, async (req, res) => {
         res.status(500).send(e);
     }
 });
-app.get("/api/fetch-admin/:email", verifyJwt, async (req, res) => {
+app.get("/fetch-admin/:email", verifyJwt, async (req, res) => {
     const query = { email: req.params.email };
 
     const user = await userModel.find(query).select(["role"]);
@@ -54,7 +54,7 @@ app.get("/api/fetch-admin/:email", verifyJwt, async (req, res) => {
     }
 });
 
-app.put("/api/make-admin/:email", verifyJwt, async (req, res) => {
+app.put("/make-admin/:email", verifyJwt, async (req, res) => {
     const query = { email: req.params.email };
 
     const user = await userModel.find(query).select(["role"]);
@@ -76,7 +76,7 @@ app.put("/api/make-admin/:email", verifyJwt, async (req, res) => {
         res.status(500).send(error);
     }
 });
-app.put("/api/update-user/:email", verifyJwt, async (req, res) => {
+app.put("/update-user/:email", verifyJwt, async (req, res) => {
     const query = { email: req.params.email };
     console.log(req.body);
     userModel.findOneAndUpdate(

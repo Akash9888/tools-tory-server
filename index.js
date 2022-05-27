@@ -1,28 +1,34 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const connectToMongo = require("./db");
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
-const userRouter = require("./Routes/UserRoutes");
-const toolRouter = require("./Routes/ToolRoutes");
-const orderRouter = require("./Routes/OrderRoutes");
-const paymentRouter = require("./Routes/PaymentRoutes");
-const reviewRouter = require("./Routes/ReviewRoutes");
+// const userRouter = require("./Routes/UserRoutes");
+// const toolRouter = require("./Routes/ToolRoutes");
+// const orderRouter = require("./Routes/OrderRoutes");
+// const paymentRouter = require("./Routes/PaymentRoutes");
+// const reviewRouter = require("./Routes/ReviewRoutes");
+
 require("dotenv").config();
 const app = express();
 app.use(express.json());
-app.use(cors());
+
 const port = process.env.port || 5000;
+app.use(cors());
+connectToMongo();
 
-mongoose.connect(
-    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.33mjx.mongodb.net/tools-toy?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-);
+app.get("/", (req, res) => {
+    res.send("Tools-Tory!");
+});
+app.use("/api/user", require("./Routes/UserRoutes"));
+app.use("/api/tool", require("./Routes/ToolRoutes"));
+app.use("/api/order", require("./Routes/OrderRoutes"));
+app.use("/api/payment", require("./Routes/PaymentRoutes"));
+app.use("/api/review", require("./Routes/ReviewRoutes"));
 
-app.use(userRouter);
-app.use(toolRouter);
-app.use(orderRouter);
-app.use(paymentRouter);
-app.use(reviewRouter);
+// app.use(userRouter);
+// app.use(toolRouter);
+// app.use(orderRouter);
+// app.use(paymentRouter);
+// app.use(reviewRouter);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
